@@ -1,0 +1,12 @@
+/* <= xs  */
+@media(max-width: 768px) {
+    #footer div p { text-align: center !important;  }
+}
+/* >= sm */
+@media(min-width: 768px) {
+    body { margin-top: 20px; }
+}
+/* >= md */
+@media(min-width: 992px) {}
+/* >= lg */
+@media(min-width: 1200px) {}

@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
+{% load bootstrap3 %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<form class="row-fluid" method="post" action="{% url 'taskr:home' %}">
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    {% buttons %}<div class="form-group"><button type="submit" class="btn btn-primary">{{ user.id }}</button></div>{% endbuttons %}
+</form>
+<div class="row-fluid"></div>
 {% endblock %}
