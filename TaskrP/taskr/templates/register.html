@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+    <form class="col-xs-9 col-sm-6 col-lg-5" method="post" action="{% url 'taskr:auth-register' %}">
+        <h3 class="text-primary">Sign up to Taskr!</h3>
+        {% bootstrap_form form layout='inline' %}
+        {% csrf_token %}
+        {% buttons %}<button type="submit" class="btn btn-primary">Sign Up</button>{% endbuttons %}
+    </form>
+{% endblock %}

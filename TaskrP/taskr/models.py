@@ -2,12 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
 class Author(models.Model):
     user = models.OneToOneField(User, primary_key=True)
     name = models.CharField(max_length=30)
 
     def __str__(self):
         return u'%s' % (self.user)
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=30)
@@ -16,6 +18,7 @@ class Tag(models.Model):
     def __str__(self):
         return u'%s' % (self.name)
 
+
 # class Group(models.Model):
 #     name = models.CharField(max_length=30)
 #     owner = models.OneToOneField(Author)
@@ -23,6 +26,7 @@ class Tag(models.Model):
 #
 #     def __str__(self):
 #         return u'{%s} %s' % (self.id, self.name)
+
 
 class Task(models.Model):
     author = models.ForeignKey(Author, unique=False)
@@ -34,6 +38,8 @@ class Task(models.Model):
     tag = models.ManyToManyField(Tag, related_name='tags', null=True, blank=True, default=None)
     # group = models.ForeignKey(Group, blank=True, default=None)
 
+    absolute_url = None
+
     def __str__(self):
         return u'%s' % (self.name)
 
@@ -41,7 +47,7 @@ class Task(models.Model):
         self.completed = not self.completed
 
     def is_past_deadline(self):
-        return timezone.now() > self.deadline
+        return (timezone.now() > self.deadline) if self.deadline else False
 
     def get_absolute_url(self):
-        return '/'
+        return reverse

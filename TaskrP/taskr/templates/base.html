@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block bootstrap3_content %}
-<div id="container" class="container">
+<div id="container" class="container col-sm-6 col-sm-offset-3">
     <div id="header" class="row">
         <div class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
@@ -48,7 +48,7 @@
                         <li><span class="navbar-text">Signed in as <a href="#" class="navbar-link">{{ user }}</a></span></li>
                         <li><a href="{% url 'taskr:auth-logout' %}">Sign Off</a></li>
                         {% else %}
-                        <li><a class="text-primary" href="{% url 'taskr:auth-login' %}">Sign Up</a></li>
+                        <li><a class="text-primary" href="{% url 'taskr:auth-register' %}">Sign Up</a></li>
                         <li><a href="{% url 'taskr:auth-login' %}">Sign In</a></li>
                         {% endif %}
                     </ul>

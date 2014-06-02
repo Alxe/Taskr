@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load bootstrap3 %}
+{% load tz %}
 
 {% block title %}Home{% endblock %}
 
@@ -10,5 +11,36 @@
     {% csrf_token %}
     {% buttons %}<div class="form-group"><button type="submit" class="btn btn-primary">Send</button></div>{% endbuttons %}
 </form>
-<div class="row-fluid"></div>
+<div class="row-fluid">
+    <hr />
+</div>
+<div class="row-fluid">
+    {% if tasks %}
+        {% for task in tasks %}
+        <div class="col-xs-12 col-md-6">
+            <div class="row-fluid">
+                <p class="pull-left">
+                    <a href="{{ task.get_absolute_url }}">
+                        <strong>{{ task.name|truncatechars:'14' }}</strong>
+                    </a>
+                </p>
+                <p class="pull-right {% if task.is_past_deadline %}text-danger{% else %}text-muted{% endif %}">
+                    {% if task.deadline %}
+                        {% if task.is_past_deadline %}
+                            {{ task.deadline|timesince }}
+                        {% else %}
+                            {{ task.deadline|timeuntil }}
+                        {% endif %}
+                    {% else %}
+                        (no deadline)
+                    {% endif %}
+                    <span class="glyphicon glyphicon-time"></span>
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    n/a
+    {% endif %}
+</div>
 {% endblock %}

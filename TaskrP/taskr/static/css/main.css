@@ -1,5 +1,7 @@
 /* <= xs  */
 @media(max-width: 768px) {
+    body { margin: 0 12px;}
+
     #footer div p { text-align: center !important;  }
 }
 /* >= sm */
