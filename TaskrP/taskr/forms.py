@@ -1,25 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
+from taskr.models import Task
 
-class RegistrationForm(forms.Form):
-    username = forms.EmailField(max_length=30, widget=forms.TextInput(attrs=attrs_dict))
-    password = forms.PasswordField()
-    passwordConf = forms.PasswordField()
-    # rest of the fields
+class RegistrationForm(forms.ModelForm):
+    pass
 
-    def clean(self):
-        cleaned_data = super(RegistrationForm, self).clean()
-        username = cleaned_data.get("username")
-        password = cleaned_data.get("password")
-        passwordConf = cleaned_data.get("passwordConf")
-
-        if(not len(User.objects.filter(username=username)) == 0):
-            pass
-
-        if(not str(password) == str(passwordConf)):
-            pass
-
-        # you can validate those here
+class TaskForm(forms.ModelForm):
 
     class Meta:
-        model = User
+        model = Task
+        fields = ['name', 'tag', 'author']
+        exclude = ['pub_date', 'edit_date', 'completed', 'author']
+
