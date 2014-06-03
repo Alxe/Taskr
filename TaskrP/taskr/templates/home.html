@@ -18,25 +18,32 @@
     {% if tasks %}
         {% for task in tasks %}
         <div class="col-xs-12 col-md-6">
-            <div class="row-fluid">
-                <p class="pull-left">
-                    <a href="{{ task.get_absolute_url }}">
-                        <strong>{{ task.name|truncatechars:'14' }}</strong>
-                    </a>
-                </p>
-                <p class="pull-right {% if task.is_past_deadline %}text-danger{% else %}text-muted{% endif %}">
+            <p class="pull-left">
+                <a href="{{ task.get_absolute_url }}">
+                    <strong>{{ task.name|truncatechars:'20' }}</strong>
+                </a>
+            </p>
+            <p class="pull-right
                     {% if task.deadline %}
                         {% if task.is_past_deadline %}
-                            {{ task.deadline|timesince }}
+                            text-danger
                         {% else %}
-                            {{ task.deadline|timeuntil }}
+                            text-info
                         {% endif %}
                     {% else %}
-                        (no deadline)
+                        text-muted
+                    {% endif %}">
+                {% if task.deadline %}
+                    {% if task.is_past_deadline %}
+                        {{ task.deadline|timesince }}
+                    {% else %}
+                        {{ task.deadline|timeuntil }}
                     {% endif %}
-                    <span class="glyphicon glyphicon-time"></span>
-                </p>
-            </div>
+                {% else %}
+                    (no deadline)
+                {% endif %}
+                <span class="glyphicon glyphicon-time"></span>
+            </p>
         </div>
         {% endfor %}
     {% else %}

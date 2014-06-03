@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Task List
+{% endblock %}
+
+{% block content %}
+
+{% if tasks %}
+<ul>
+    {% for task in tasks %}
+    <li>{{ task.name|truncatechars:'20' }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

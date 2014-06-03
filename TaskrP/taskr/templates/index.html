@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Index{% endblock %}
-
+{% block title %}Welcome!{% endblock %}
 
 {% block content %}
+    <div class="jumbotron">
+        <h1><span class="text-primary">Taskr</span> + you = awesome!</h1>
+        <p>Taskr let's you manage your tasks, be them personal or professional, with absolute ease. Try it now...</p>
+        <p class="text-center"><a href="{% url 'taskr:auth-register' %}" class="btn btn-lg btn-primary">Sign me up!</a></p>
+    </div>
 {% endblock %}
