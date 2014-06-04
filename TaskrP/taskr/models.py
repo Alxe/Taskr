@@ -80,7 +80,7 @@ class Task(models.Model):
     title = models.CharField(max_length=255)
     # content = models.TextField(blank=True, max_length=255, default='')
     completed = models.BooleanField(default=False)
-    deadline = models.DateTimeField(null=True, blank=True)
+    deadline = models.DateTimeField(null=True, blank=True, default=None)
     pub_date = models.DateTimeField(auto_now_add=True, editable=False)
     edit_date = models.DateTimeField(auto_now_add=True, auto_now=True, editable=False)
     # tag = models.ManyToManyField(Tag, related_name='tags', null=True, blank=True, default=None)
@@ -100,10 +100,10 @@ class Task(models.Model):
     def is_near_deadline(self, days=1):
         if self.is_past_deadline():
             return False
-        return timezone.now() > (self.deadline - timezone.timedelta(days=days))
+        return (self.deadline-timezone.timedelta(days=days)) < timezone.now()
 
     def is_past_deadline(self):
-        return (timezone.now() > self.deadline) if self.deadline else False
+        return (self.deadline < timezone.now()) if self.deadline else False
 
     def get_absolute_url(self):
         return reverse('taskr:task-detail', kwargs={'pk': self.id })
