@@ -107,3 +107,6 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse('taskr:task-detail', kwargs={'pk': self.id })
+
+    def get_complete_url(self):
+        return reverse('taskr:task-complete', kwargs={'pk': self.id })

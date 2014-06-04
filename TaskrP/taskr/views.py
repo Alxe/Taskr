@@ -12,6 +12,30 @@ from taskr import models
 from taskr.forms import TaskrUserCreationForm, TaskCreationForm, TaskrUserLoginForm
 
 
+class UserBasedMultipleObjectMixin(MultipleObjectMixin):
+    offset = None
+    limit = None
+
+    def get_context_data(self, **kwargs):
+        queryset = self.get_queryset()
+        queryset = queryset.filter(author_id=self.request.user.id)
+        if (self.offset is not None) and (self.offset >= 0) and (self.offset < queryset.count()):
+            queryset = queryset.filter()[self.offset:]
+        if (self.limit is not None) and (self.limit >= 0) and (self.limit < queryset.count()):
+            queryset = queryset.filter()[:self.limit]
+        context_object_name = self.get_context_object_name(queryset)
+        context = {
+            'paginator': None,
+            'page_obj': None,
+            'is_paginated': False,
+            'object_list': queryset
+        }
+        if context_object_name is not None:
+            context[context_object_name] = queryset
+        context.update(kwargs)
+        return super(MultipleObjectMixin, self).get_context_data(**context)
+
+
 class IndexView(TemplateView):
     template_name = 'index.html'
 
@@ -21,44 +45,31 @@ class IndexView(TemplateView):
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
 
-class HomeView(CreateView, MultipleObjectMixin):
-    # common
-    model = models.Task
-    template_name = 'home.html'
-
-    #form
+class HomeView(CreateView, UserBasedMultipleObjectMixin):
     form_class = TaskCreationForm
-    success_url = '#'
-
-    # list
-    object_list = models.Task.objects.all()
+    queryset = models.Task.objects.filter(completed=False)
+    template_name = 'home.html'
     context_object_name = 'tasks'
-    paginate_by = None
+    success_url = '#'
+    offset = None
+    limit = 10
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse_lazy('taskr:index'))
         return super(HomeView, self).dispatch(request, *args, **kwargs)
 
-    def get_queryset(self):
-        q = super(HomeView, self).get_queryset()
-        q.filter(author=get_user_model().objects.get(user=self.request.user))
 
     def form_valid(self, form):
         task = form.save(commit=False)
-        task.author = get_user_model().objects.get(user=self.request.user)
+        task.author = self.request.user
         return super(HomeView, self).form_valid(form)
 
 
-class TaskListView(ListView):
+class TaskListView(ListView, UserBasedMultipleObjectMixin):
     queryset = models.Task.objects.filter(completed=False)
     template_name = 'task_list.html'
     context_object_name = 'tasks'
-
-    def get_queryset(self):
-        q = super(TaskListView, self).get_queryset()
-        q.filter(author=self.request.user.id)
-        return q
 
 
 class TaskArchiveView(TaskListView):
@@ -68,13 +79,13 @@ class TaskArchiveView(TaskListView):
 
 class TaskDetailView(DetailView):
     template_name = 'task_detail.html'
-    queryset = models.Task.objects.filter(completed=False)
+    queryset = models.Task.objects.all()
 
 
 class TaskCompleteView(View, SingleObjectMixin):
     model = models.Task
 
-    def post(self):
+    def post(self, request, *args, **kwargs):
         task = self.get_object()
         task.toggle_complete()
         return HttpResponseRedirect(task.get_absolute_url())
@@ -95,7 +106,6 @@ class RegisterView(CreateView):
         if user is not None:
             auth_login(self.request, user)
         return redirect
-
 
 
 class LoginView(FormView):
