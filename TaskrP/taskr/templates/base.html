@@ -37,7 +37,7 @@
                                 My Taskr<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{% url 'taskr:task-list' %}">Tasks</a></li>
+                                <li><a href="{% url 'taskr:task-list' %}">Task List</a></li>
                             </ul>
                         </li>
 
@@ -62,7 +62,9 @@
     {% bootstrap_messages %}
 
     <div id="content" class="row">
-        <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">{% block content %}(no content){% endblock %}</div>
+        <div class="{% block content_class %}col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2{% endblock %}">
+            {% block content %}(no content){% endblock %}
+        </div>
     </div>
 
     <div class="row">
