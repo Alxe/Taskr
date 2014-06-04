@@ -25,6 +25,7 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'taskr.TaskrUser'
+AUTHENTICATION_BACKENDS = ('taskr.backends.EmailAuthBackend', )
 
 # Application definition
 

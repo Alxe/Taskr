@@ -23,20 +23,13 @@ class TaskrUserChangeForm(UserChangeForm):
         model = TaskrUser
 
 
-class TaskrUserLoginForm(forms.ModelForm):
+class TaskrUserLoginForm(forms.Form):
 
-    def is_valid(self):
-        try:
-            user = get_user_model().objects.get(email=self.cleaned_data['email'])
-            if user.check_password(self.cleaned_data['password']):
-                return True
-        except:
-            pass
-        return False
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
-        model = TaskrUser
-        fields = ['email', 'password']
+        fields = ['email', 'password', ]
 
 
 class TaskCreationForm(forms.ModelForm):

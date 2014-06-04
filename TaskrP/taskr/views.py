@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
-from django.contrib.auth import get_user_model, login as auth_login, logout as auth_logout
+from django.contrib.auth import get_user_model, authenticate, login as auth_login, logout as auth_logout
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
@@ -101,10 +101,11 @@ class LoginView(FormView):
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        auth_login(self.request, form.get_user())
-        if self.request.test_cookie_worked():
-            self.request.delete_test_cookie()
-        return HttpResponseRedirect(self.get_success_url())
+        user = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+        if user is not None:
+            auth_login(self.request, user)
+            return HttpResponseRedirect(self.success_url)
+        return self.form_invalid()
 
     def get(self, request, *args, **kwargs):
         return super(LoginView, self).get(request, *args, **kwargs)
