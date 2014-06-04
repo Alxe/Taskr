@@ -7,11 +7,13 @@ Task List
 {% block content %}
 
 {% if tasks %}
-<ul>
     {% for task in tasks %}
-    <li>{{ task.name|truncatechars:'20' }}</li>
+        <div class="row" style="margin-bottom:6px;">
+            {% include '_task_listing.html' with task=task only %}
+        </div>
     {% endfor %}
-</ul>
+{% else %}
+n/a
 {% endif %}
 
 {% endblock %}

@@ -93,3 +93,7 @@ LOGIN_REDIRECT_URL = 'taskr:index'
 LOGIN_URL = 'taskr:auth_login'
 LOGOUT_URL = 'taskr:auth_logout'
 
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.core.context_processors.request',
+)

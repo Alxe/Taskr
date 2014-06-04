@@ -1,7 +1,7 @@
-<h5 class="pull-left">
-    <strong><a href="{{ task.get_absolute_url }}">{{ task.name|truncatechars:'20' }}</a></strong>
-</h5>
-<div class="pull-right">
+<div class="col-xs-6 text-left">
+    <strong><a href="{{ task.get_absolute_url }}">{{ task.title|truncatechars:'20' }}</a></strong>
+</div>
+<div class="col-xs-6 text-right">
     <span class="{% if task.deadline %}
                     {% if task.is_near_deadline %}
                         text-warning
@@ -15,19 +15,21 @@
                 {% endif %}">
             {% if task.deadline %}
                 {% if task.is_past_deadline %}
-                    {{ task.deadline|timesince }}
+                    {{ task.deadline|timesince }} late
                 {% else %}
-                    {{ task.deadline|timeuntil }}
+                    {{ task.deadline|timeuntil }} left
                 {% endif %}
             {% else %}
                 (no deadline)
             {% endif %}
         <span class="glyphicon glyphicon-time"></span>
     </span>
-    <span>
-        <a href="{{ task.get_absolute_url }}complete"
-           class="btn {% if not task.completed %}btn-primary{% else %}btn-danger{% endif%}">
-           {% if not task.completed %}Mark{% else %}Unmark{% endif%}
-       </a>
-    </span>
+    <!--<form method="post" action="{{ task.get_absolute_url }}complete/">-->
+        <!--<button type="submit"-->
+           <!--class="btn btn-xs {% if not task.completed %}btn-primary{% else %}btn-danger{% endif%}">-->
+           <!--{% if not task.completed %}Mark{% else %}Unmark{% endif%}-->
+       <!--</button>-->
+    <!--</form>-->
 </div>
+
+
