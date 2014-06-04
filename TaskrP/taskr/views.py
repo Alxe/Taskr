@@ -89,6 +89,15 @@ class RegisterView(CreateView):
         #     return HttpResponseRedirect(reverse_lazy('taskr:index'))
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
+    def form_valid(self, form):
+        redirect = super(RegisterView, self).form_valid(form)
+        user = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password1'])
+        if user is not None:
+            auth_login(self.request, user)
+        return redirect
+
+
+
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = TaskrUserLoginForm
@@ -100,16 +109,6 @@ class LoginView(FormView):
         request.session.set_test_cookie()
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
-        user = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password'])
-        if user is not None:
-            auth_login(self.request, user)
-            return HttpResponseRedirect(self.success_url)
-        return self.form_invalid()
-
-    def get(self, request, *args, **kwargs):
-        return super(LoginView, self).get(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -118,6 +117,12 @@ class LoginView(FormView):
         else:
             return self.form_invalid(form)
 
+    def form_valid(self, form):
+        user = authenticate(email=form.cleaned_data['email'], password=form.cleaned_data['password'])
+        if user is not None:
+            auth_login(self.request, user)
+            return HttpResponseRedirect(self.success_url)
+        return self.form_invalid()
 
 class LogoutView(RedirectView):
     url = reverse_lazy('taskr:index')
