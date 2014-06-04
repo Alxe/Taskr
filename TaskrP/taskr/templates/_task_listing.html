@@ -1,0 +1,33 @@
+<h5 class="pull-left">
+    <strong><a href="{{ task.get_absolute_url }}">{{ task.name|truncatechars:'20' }}</a></strong>
+</h5>
+<div class="pull-right">
+    <span class="{% if task.deadline %}
+                    {% if task.is_near_deadline %}
+                        text-warning
+                    {% elif task.is_past_deadline %}
+                        text-danger
+                    {% else %}
+                        text-info
+                    {% endif %}
+                {% else %}
+                    text-muted
+                {% endif %}">
+            {% if task.deadline %}
+                {% if task.is_past_deadline %}
+                    {{ task.deadline|timesince }}
+                {% else %}
+                    {{ task.deadline|timeuntil }}
+                {% endif %}
+            {% else %}
+                (no deadline)
+            {% endif %}
+        <span class="glyphicon glyphicon-time"></span>
+    </span>
+    <span>
+        <a href="{{ task.get_absolute_url }}complete"
+           class="btn {% if not task.completed %}btn-primary{% else %}btn-danger{% endif%}">
+           {% if not task.completed %}Mark{% else %}Unmark{% endif%}
+       </a>
+    </span>
+</div>
