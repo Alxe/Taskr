@@ -100,7 +100,7 @@ class Task(models.Model):
     def is_near_deadline(self, days=1):
         if self.is_past_deadline():
             return False
-        return (self.deadline - timezone.timedelta(days=days)) > timezone.now()
+        return timezone.now() > (self.deadline - timezone.timedelta(days=days))
 
     def is_past_deadline(self):
         return (timezone.now() > self.deadline) if self.deadline else False
