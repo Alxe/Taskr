@@ -2,7 +2,7 @@
 @media(max-width: 768px) {
     #content { margin: 0 12px;}
 
-    #footer div p { text-align: center !important;  }
+    .text-center-xs { text-align: center !important; }
 }
 /* >= sm */
 @media(min-width: 768px) {

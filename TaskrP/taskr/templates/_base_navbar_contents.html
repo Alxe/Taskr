@@ -1,0 +1,29 @@
+{% if user.is_authenticated %}
+<ul class="nav navbar-nav navbar-left">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sections <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="{% url 'taskr:task-list' %}">Task List</a></li>
+        </ul>
+    </li>
+</ul>
+
+<hr class="visible-xs divider" />
+{% endif %}
+
+{% if user.is_authenticated %}
+<p class="visible-xs navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{ user }}</a>
+{% endif %}
+
+<ul class="nav navbar-nav navbar-right">
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'taskr:auth-logout' %}">Sign Off</a></li>
+    {% else %}
+    <li class="active"><a href="{% url 'taskr:auth-register' %}">Sign Up</a></li>
+    <li><a href="{% url 'taskr:auth-login' %}">Sign In</a></li>
+    {% endif %}
+</ul>
+
+{% if user.is_authenticated %}
+<p class="hidden-xs navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{ user }}</a>
+{% endif %}

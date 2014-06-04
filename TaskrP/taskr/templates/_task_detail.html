@@ -1,0 +1,38 @@
+<div class="panel-heading">
+    <div class="col-xs-8 text-justify text-center-xs">
+        <strong>{{ task.title }}</strong>
+    </div>
+    <div class="col-xs-4 text-right text-center-xs">
+        <form class="form" method="post" action="{{ task.get_complete_url }}">
+            {% if not task.completed %}
+                <button class="btn btn-xs btn-primary" type="submit">Mark</button>
+            {% else %}
+                <button class="btn btn-xs btn-danger" type="submit">Clear</button>
+            {% endif %}
+            {% csrf_token %}
+        </form>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+{% if task.content %}
+<div class="panel-body">
+    <p class="text-justify text-center-xs">{{ task.content }}</p>
+</div>
+{% endif %}
+
+<div class="panel-footer">
+    <div class="col-sm-6 text-left text-center-xs">
+        <small>
+            <strong title="Publication date">Pub. Date: </strong>
+            <span class="{{ task.pub_date }}">{{ task.pub_date|date }} <span class="glyphicon glyphicon-time"></span></span>
+        </small>
+    </div>
+    <div class="col-sm-6 text-right text-center-xs">
+        <small>
+            <strong title="Deadline date">Deadline: </strong>
+            {% include '_task_deadline.html' %}
+        </small>
+    </div>
+    <div class="clearfix"></div>
+</div>

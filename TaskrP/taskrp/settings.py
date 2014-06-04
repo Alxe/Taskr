@@ -57,7 +57,6 @@ ROOT_URLCONF = 'taskrp.urls'
 
 WSGI_APPLICATION = 'taskrp.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 

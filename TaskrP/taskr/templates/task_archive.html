@@ -1,6 +1,8 @@
-{% extends '_base_task_list.html' %}
+{% extends 'task_list.html' %}
+
+{% block title %}Completed Tasks{% endblock %}
 
 {% block menu %}
-<a class="btn btn-xs btn-default" href="{% url 'taskr:task-list' %}">Current Tasks</a>
-<a class="btn btn-xs btn-primary" href="{% url 'taskr:task-archive' %}">Completed Tasks</a>
+<a class="btn btn-default" href="{% url 'taskr:task-list' %}">Current Tasks</a>
+<a class="btn btn-primary" href="{% url 'taskr:task-archive' %}">Completed Tasks</a>
 {% endblock %}

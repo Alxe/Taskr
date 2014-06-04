@@ -1,0 +1,12 @@
+<span title="{{ task.deadline|default:'(no deadline)' }}" class="
+{% if task.deadline %}
+    {% if task.is_near_deadline %}text-warning
+    {% elif task.is_past_deadline %}text-danger
+    {% else %}text-info{% endif %}
+{% else %}text-muted{% endif %}">
+{% if task.deadline %}
+    {% if task.is_past_deadline %}{{ task.deadline|timesince }} late
+    {% else %}{{ task.deadline|timeuntil }} left{% endif %}
+{% else %}(no deadline){% endif %}
+    <span class="glyphicon glyphicon-time"></span>
+</span>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+    <form class="form form-horizontal" method="post" action="{% url 'taskr:auth-register' %}">
+        <h3 class="text-center text-muted">Sign up to <span class="text-primary">Taskr</span> now!</h3>
+        {% bootstrap_form form layout='horizontal' label_class='col-md-2' field_class='col-md-8' %}
+        {% csrf_token %}
+        {% buttons layout='horizontal' %}{% bootstrap_button 'Sign up' 'submit' %}{% endbuttons %}
+    </form>
+{% endblock %}

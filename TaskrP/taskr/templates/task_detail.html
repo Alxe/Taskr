@@ -3,46 +3,7 @@
 {% block title %}{{ task.title }}{% endblock %}
 
 {% block content %}
-
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h4 class="pull-left">
-            <strong>{{ task.title }}</strong> by {{ task.author }}
-        </h4>
-        <form class="pull-right" method="post" action="{{ task.get_complete_url }}">
-            {% csrf_token %}
-            {% if not task.completed %}
-                <button class="btn btn-primary" type="submit">Mark</button>
-            {% else %}
-                <button class="btn btn-danger" type="submit">Clear</button>
-            {% endif %}
-        </form>
-        <div class="clearfix"></div>
+    <div class="panel-info">
+        {% include '_task_detail.html' with task=task only %}
     </div>
-    {% if task.content %}
-        <div class="panel-body">
-            <p class="text-center">{{ task.content }}</p>
-        </div>
-    {% endif %}
-    <div class="panel-footer">
-        <small class="pull-left">
-            <strong>Pub. Date:</strong>
-            <span class="{{ task.pub_date }}">{{ task.pub_date|date }} <span class="glyphicon glyphicon-time"></span></span>
-        </small>
-        <small class="pull-right">
-            <strong>Deadline:</strong>
-            <span title="{{ task.deadline }}">{{ task.deadline|date }} <span class="glyphicon glyphicon-time"></span></span>
-        </small>
-        <div class="clearfix"></div>
-    </div>
-</div>
-
-
-
 {% endblock %}
-
-<strong>Deadline:</strong>
-
-        <strong>Publication Date:</strong>
-        <span></span>
-        Published by: {{ task.author }}

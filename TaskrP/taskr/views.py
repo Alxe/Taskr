@@ -12,7 +12,7 @@ from taskr import models
 from taskr.forms import TaskrUserCreationForm, TaskCreationForm, TaskrUserLoginForm
 
 
-class UserBasedMultipleObjectMixin(MultipleObjectMixin):
+class AuthorBasedMultipleTaskMixin(MultipleObjectMixin):
     offset = None
     limit = None
 
@@ -45,12 +45,12 @@ class IndexView(TemplateView):
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
 
-class HomeView(CreateView, UserBasedMultipleObjectMixin):
+class HomeView(CreateView, AuthorBasedMultipleTaskMixin):
     form_class = TaskCreationForm
     queryset = models.Task.objects.filter(completed=False)
     template_name = 'home.html'
     context_object_name = 'tasks'
-    success_url = '#'
+    success_url = reverse_lazy('taskr:home')
     offset = None
     limit = 10
 
@@ -66,7 +66,7 @@ class HomeView(CreateView, UserBasedMultipleObjectMixin):
         return super(HomeView, self).form_valid(form)
 
 
-class TaskListView(ListView, UserBasedMultipleObjectMixin):
+class TaskListView(ListView, AuthorBasedMultipleTaskMixin):
     queryset = models.Task.objects.filter(completed=False)
     template_name = 'task_list.html'
     context_object_name = 'tasks'
@@ -92,7 +92,7 @@ class TaskCompleteView(View, SingleObjectMixin):
 
 
 class RegisterView(CreateView):
-    template_name = 'register.html'
+    template_name = 'auth_register.html'
     form_class = TaskrUserCreationForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -109,7 +109,7 @@ class RegisterView(CreateView):
 
 
 class LoginView(FormView):
-    template_name = 'login.html'
+    template_name = 'auth_login.html'
     form_class = TaskrUserLoginForm
     success_url = reverse_lazy('taskr:home')
 

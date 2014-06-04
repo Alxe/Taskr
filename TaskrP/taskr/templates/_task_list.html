@@ -1,0 +1,12 @@
+
+{% if tasks %}
+{% for task in tasks %}
+    <div class="well well-sm" style="margin-bottom:6px;">
+        {% include '_task_list_item.html' with task=task only %}
+    </div>
+{% endfor %}
+{% else %}
+    <div class="text-center">
+        <small class="text-muted">(no tasks? surely you are busy!)</small>
+    </div>
+{% endif %}
