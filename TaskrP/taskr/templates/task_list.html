@@ -1,19 +1,6 @@
-{% extends 'base.html' %}
+{% extends '_base_task_list.html' %}
 
-{% block title %}
-Task List
-{% endblock %}
-
-{% block content %}
-
-{% if tasks %}
-    {% for task in tasks %}
-        <div class="row" style="margin-bottom:6px;">
-            {% include '_task_listing.html' with task=task only %}
-        </div>
-    {% endfor %}
-{% else %}
-n/a
-{% endif %}
-
+{% block menu %}
+<a class="btn btn-xs btn-primary" href="{% url 'taskr:task-list' %}">Current Tasks</a>
+<a class="btn btn-xs btn-default" href="{% url 'taskr:task-archive' %}">Completed Tasks</a>
 {% endblock %}

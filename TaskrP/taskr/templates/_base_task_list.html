@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Task List
+{% endblock %}
+
+{% block content %}
+
+<div class="row text-center">
+    {% block menu %}{% endblock %}
+</div>
+<div>
+    <hr />
+</div>
+<div>
+    {% if tasks %}
+        {% for task in tasks %}
+            <div class="row" style="margin-bottom:6px;">
+                {% include '_task_listing.html' with task=task only %}
+            </div>
+        {% endfor %}
+    {% else %}
+    n/a
+    {% endif %}
+</div>
+
+{% endblock %}
