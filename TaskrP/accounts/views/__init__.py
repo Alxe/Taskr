@@ -1,5 +1,5 @@
 __author__ = 'Alex'
 
-from .login import LoginView
-from .logout import LogoutView
-from .register import RegisterView
+from ._login import LoginView
+from ._logout import LogoutView
+from ._register import RegisterView

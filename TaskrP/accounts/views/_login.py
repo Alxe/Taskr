@@ -10,9 +10,9 @@ from django.views.generic import FormView
 
 
 class LoginView(FormView):
-    """ Class-based view for login purposes """
+    """ Class-based view for user login purposes """
     form_class = AuthenticationForm
-    success_url = getattr(settings, 'ACCOUNTS_LOGIN_NEXT', '/')
+    success_url = getattr(settings, 'ACCOUNTS_NEXT_LOGIN', '/')
     template_name = None
 
     @method_decorator(never_cache)

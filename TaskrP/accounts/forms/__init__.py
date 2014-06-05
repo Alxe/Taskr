@@ -1,4 +1,4 @@
 __author__ = 'Alej. N. Pérez'
 
-from .authenticate import AuthenticationForm
-from .registration import RegistrationForm
+from ._authenticate import AuthenticationForm
+from ._registration import RegistrationForm

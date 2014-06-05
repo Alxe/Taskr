@@ -9,23 +9,23 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.core.urlresolvers import reverse_lazy
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '#n#pf-*)rn3^1!lz854@w+ppr%gq7+g1&(dg*!*34s4l0=1uq2'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+ALLOWED_HOSTS = ['*']
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
+# Auth settings
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ('accounts.backends.EmailIdentityBackend', )
+
+# Accounts (authentication module) settings
+ACCOUNTS_NEXT_LOGIN = reverse_lazy('taskr:index')
+ACCOUNTS_NEXT_LOGOUT = reverse_lazy('taskr:index')
+ACCOUNTS_NEXT_REGISTER = reverse_lazy('taskr:index')
 
 # Application definition
 
@@ -97,3 +97,11 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
+
+
+# Django-boostrap3
+BOOTSTRAP3 = {
+    'theme_url': '//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css',
+    'horizontal_field_class': 'col-md-8',
+    'include_jquery': True,
+}

@@ -6,13 +6,11 @@ from django.contrib.auth import logout
 
 
 class LogoutView(RedirectView):
+    """ Class-based view to logout existing users, if any """
     permanent = False
-    url = getattr(settings, 'ACCOUNTS_LOGOUT_NEXT', '/')
+    url = getattr(settings, 'ACCOUNTS_NEXT_LOGOUT', '/')
 
     def get(self, request, *args, **kwargs):
         """ Handles GET requests, logging an user out and redirecting to a url """
-        # Log outs the user, if any
         logout(request)
-
-        # Proceeds to redirect the
         return super(LogoutView, self).get(request, *args, **kwargs)
