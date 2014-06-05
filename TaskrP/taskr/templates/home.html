@@ -20,3 +20,11 @@
     {% include 'task/_list.html' with tasks=tasks only %}
 </div>
 {% endblock %}
+
+{% block extra_script %}
+<script>
+$(function() {
+    $('#datepicker').datepicker();
+});
+</script>
+{% endblock %}

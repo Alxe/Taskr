@@ -1,4 +1,4 @@
-{% extends './base/bootstrap3.html' %}
+{% extends 'base/bootstrap3.html' %}
 
 {% load bootstrap3 %}
 {% load url from future %}
@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block bootstrap3_content %}
-<div id="container" class="container col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+<div id="container" class="container col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
     <div id="header" class="row">
         <div class="navbar navbar-default" role="navigation">
             <div class="navbar-header">
@@ -23,9 +23,8 @@
                 </button>
 
                 <a class="navbar-brand" href="{% url 'taskr:index' %}">
-                    Taskr! <sup class="label label-primary">
-                        <small>BETA</small>
-                    </sup>
+                    <strong>Taskr!</strong>
+                    <small><sup class="text-muted">BETA</sup></small>
                 </a>
             </div>
 
