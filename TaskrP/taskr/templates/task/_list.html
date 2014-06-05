@@ -1,8 +1,9 @@
 
 {% if tasks %}
 {% for task in tasks %}
-    <div class="well well-sm" style="margin-bottom:6px;">
-        {% include '_task_list_item.html' with task=task only %}
+    <div class="well" style="margin-bottom:6px;">
+        {% include 'task/_list_item.html' with task=task only %}
+        <div class="clearfix"></div>
     </div>
 {% endfor %}
 {% else %}

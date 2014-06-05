@@ -1,4 +1,4 @@
-{% extends 'bootstrap3.html' %}
+{% extends './base/bootstrap3.html' %}
 
 {% load bootstrap3 %}
 {% load url from future %}
@@ -30,7 +30,7 @@
             </div>
 
             <div class="collapse navbar-collapse">
-            {% include '_base_navbar_contents.html' %}
+            {% include 'base/_navbar_contents.html' %}
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
     </div>
 
     <div id="footer" class="row">
-        {% include '_base_footer_contents.html' %}
+        {% include 'base/_footer_contents.html' %}
     </div>
 </div>
 {% endblock %}
