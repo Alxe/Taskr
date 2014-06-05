@@ -12,7 +12,7 @@ from django.views.generic import FormView
 class LoginView(FormView):
     """ Class-based view for login purposes """
     form_class = AuthenticationForm
-    success_url = getattr(settings, 'ACCOUNTS_LOGIN_NEXT', None)
+    success_url = getattr(settings, 'ACCOUNTS_LOGIN_NEXT', '/')
     template_name = None
 
     @method_decorator(never_cache)

@@ -24,8 +24,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-AUTH_USER_MODEL = 'taskr.TaskrUser'
-AUTHENTICATION_BACKENDS = ('taskr.backends.EmailAuthBackend', )
+AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = ('accounts.backends.EmailIdentityBackend', )
 
 # Application definition
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.staticfiles',
 
+    'accounts',
     'taskr',
     'south',
     'rest_framework',

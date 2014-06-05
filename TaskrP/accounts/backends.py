@@ -1,7 +1,7 @@
 from .models import User
 
 
-class EmailAuthBackend(object):
+class EmailIdentityBackend(object):
     """ Backend to provide authentication to our module's custom User """
 
     def authenticate(self, email=None, password=None):

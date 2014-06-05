@@ -10,7 +10,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 class UserManager(BaseUserManager):
     """ Custom user manager for our model """
-    def _create_user(self, email: str, password: str, is_staff: bool, is_superuser: bool, **extra_fields: dict) -> User:
+    def _create_user(self, email: str, password: str, is_staff: bool, is_superuser: bool, **extra_fields: dict):
         """ Inner abstract method for easy user creation """
         now = timezone.now()
         if not email:
