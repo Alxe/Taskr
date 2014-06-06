@@ -6,7 +6,7 @@
 }
 /* >= sm */
 @media(min-width: 768px) {
-    body { margin-top: 20px; }
+    #container { margin-top: 20px; }
 }
 /* >= md */
 @media(min-width: 992px) {}
