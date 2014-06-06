@@ -3,7 +3,5 @@
 {% block title %}{{ task.title }}{% endblock %}
 
 {% block content %}
-    <div class="panel-primary">
-        {% include 'task/_detail.html' with task=task only %}
-    </div>
+    {% include 'task/_detail.html' with task=task only %}
 {% endblock %}

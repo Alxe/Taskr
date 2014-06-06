@@ -1,8 +1,8 @@
 from django.conf.urls import url
 from django.core.urlresolvers import reverse_lazy
-
-from taskr.views import IndexView, HomeView, TaskListView, TaskArchiveView, TaskDetailView, TaskCompleteView
 from accounts.views import LoginView, LogoutView, RegisterView
+from .models import Task
+from .views import IndexView, HomeView, TaskListView, TaskArchiveView, TaskDetailView, TaskCompleteView
 
 urlpatterns = [
     url(r'^auth/login/$', LoginView.as_view(template_name='auth/login.html'), name='auth-login'),

@@ -1,0 +1,10 @@
+{% load bootstrap3 %}
+
+<form class="form" method="post" action="{{ task.get_complete_url }}">
+    {% csrf_token %}
+    {% if not task.completed %}
+        <button class="btn btn-xs btn-primary" type="submit">Mark</button>
+    {% else %}
+        <button class="btn btn-xs btn-danger" type="submit">Clear</button>
+    {% endif %}
+</form>
