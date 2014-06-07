@@ -1,9 +1,11 @@
 {% load bootstrap3 %}
 
-<form class="form" method="post" action="{{ task.get_complete_url }}">
+<form class="form" method="post" action=".">
+    <input name="id" type="hidden" value="{{ task.id }}" />
+    <input name="author_id" type="hidden" value="{{ request.user.id }}" />
     {% csrf_token %}
     {% if not task.completed %}
-        <button class="btn btn-xs btn-primary" type="submit">Mark</button>
+        <button class="btn btn-xs btn-info" type="submit">Mark</button>
     {% else %}
         <button class="btn btn-xs btn-danger" type="submit">Clear</button>
     {% endif %}

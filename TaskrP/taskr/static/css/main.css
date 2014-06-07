@@ -1,3 +1,10 @@
+#gotop {
+    margin: 4px;
+    position: fixed;
+    top:0px;
+    left:0px;
+}
+
 /* <= xs  */
 @media(max-width: 768px) {
     #content { margin: 0 12px;}

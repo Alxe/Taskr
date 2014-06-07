@@ -1,10 +1,11 @@
 __author__ = 'Alex'
 
+from ._mixin import FilterMultipleObjectMixin, UserFilterMultipleObjectMixin
+from ._task import TaskListView, TaskArchiveView, TaskDetailView
+
 from django.views.generic import TemplateView, CreateView
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
-from ._mixin import FilterMultipleObjectMixin, UserFilterMultipleObjectMixin
-from ._task import TaskListView, TaskArchiveView, TaskDetailView, TaskCompleteView
 from ..forms import TaskCreateForm
 from ..models import Task
 

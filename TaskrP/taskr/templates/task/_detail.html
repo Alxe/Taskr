@@ -3,9 +3,11 @@
         <div class="col-xs-8 text-justify text-center-xs">
             <strong>{{ task.title }}</strong>
         </div>
+        {% if task.author_id == request.user.id %}
         <div class="col-xs-4 text-right text-center-xs">
-            {% include 'task/_complete.html' with task=task only %}
+            {% include 'task/_complete.html' %}
         </div>
+        {% endif %}
         <div class="clearfix"></div>
     </div>
 
@@ -25,7 +27,7 @@
         <div class="col-sm-6 text-right text-center-xs">
             <small>
                 <strong title="Deadline date">Deadline: </strong>
-                {% include 'task/_deadline.html' with task=task only %}
+                {% include 'task/_deadline.html' %}
             </small>
         </div>
         <div class="clearfix"></div>

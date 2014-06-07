@@ -1,10 +1,12 @@
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic.edit import FormMixin
+from ..forms import TaskCreateForm
+from taskr.forms import TaskCompleteForm
+
 __author__ = 'Alex'
 
-from django.http import HttpResponseRedirect
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_protect
-from django.views.generic import View, TemplateView, DetailView
-from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import TemplateView, FormView
+from django.views.generic.detail import SingleObjectMixin, DetailView
 from ._mixin import UserFilterMultipleObjectMixin
 from ..models import Task
 
@@ -23,16 +25,32 @@ class TaskArchiveView(TaskListView):
     queryset = Task.objects.filter(completed=True)
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(FormMixin, DetailView):
+    form_class = TaskCompleteForm
     template_name = 'task/detail.html'
-    queryset = Task.objects.all()
-
-
-class TaskCompleteView(View, SingleObjectMixin):
     model = Task
+    context_object_name = 'task'
 
-    @method_decorator(csrf_protect)
+    def dispatch(self, request, *args, **kwargs):
+        self.success_url = reverse_lazy('taskr:task-detail', kwargs={'pk': kwargs['pk']})
+        return super(TaskDetailView, self).dispatch(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
-        task = self.get_object()
-        task.toggle_complete()
-        return HttpResponseRedirect(task.get_absolute_url())
+        form = self.get_form(self.form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        return super(TaskDetailView, self).get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        task = Task.objects.get(pk=form.cleaned_data['id'])
+        task.toggle_complete(commit=False)
+        task.save()
+        return super(TaskDetailView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskDetailView, self).get_context_data(**kwargs)
+        form = self.get_form(self.form_class)
+        if form:
+            context['form'] = form
+        context.update(kwargs)
+        return super(TaskDetailView, self).get_context_data(**context)

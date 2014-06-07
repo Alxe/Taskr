@@ -11,3 +11,23 @@ class TaskCreateForm(forms.ModelForm):
     class Meta:
         model = Task
         exclude = ['author', 'completed']
+
+
+class TaskCompleteForm(forms.Form):
+    id = forms.IntegerField(required=True, widget=forms.HiddenInput())
+    author_id = forms.IntegerField(required=True, widget=forms.HiddenInput())
+
+    class Meta:
+        fields = ['id', 'author_id']
+
+    def is_valid(self):
+        is_valid = super(TaskCompleteForm, self).is_valid()
+        if is_valid:
+            try:
+                id = self.cleaned_data['id']
+                author_id = self.cleaned_data['author_id']
+                Task.objects.get(pk=id, author_id=author_id)
+                return True
+            except Task.DoesNotExist:
+                pass
+        return False
