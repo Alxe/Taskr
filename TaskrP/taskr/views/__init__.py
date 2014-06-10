@@ -1,7 +1,7 @@
 __author__ = 'Alex'
 
 from ._mixin import FilterMultipleObjectMixin, UserFilterMultipleObjectMixin
-from ._task import TaskListView, TaskArchiveView, TaskDetailView
+from ._task import TaskListView, TaskArchiveView, TaskDetailCompleteView
 
 from django.views.generic import TemplateView, CreateView
 from django.core.urlresolvers import reverse_lazy

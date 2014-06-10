@@ -27,9 +27,9 @@ ACCOUNTS_NEXT_LOGIN = reverse_lazy('taskr:index')
 ACCOUNTS_NEXT_LOGOUT = reverse_lazy('taskr:index')
 ACCOUNTS_NEXT_REGISTER = reverse_lazy('taskr:index')
 
-# Application definition
-
+# Installed applications
 INSTALLED_APPS = (
+    # Django and django-related apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,8 +38,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.staticfiles',
 
+    # 1st party apps
     'accounts',
     'taskr',
+
+    # 3rd party apps
     'south',
     'rest_framework',
     'bootstrap3',
@@ -98,10 +101,14 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
-
 # Django-boostrap3
 BOOTSTRAP3 = {
     'theme_url': '//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css',
     'horizontal_field_class': 'col-md-8',
-    'include_jquery': True,
+}
+
+# Django-REST-framework
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
+    'PAGINATE_BY': 10
 }

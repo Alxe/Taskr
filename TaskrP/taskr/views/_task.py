@@ -25,7 +25,7 @@ class TaskArchiveView(TaskListView):
     queryset = Task.objects.filter(completed=True)
 
 
-class TaskDetailView(FormMixin, DetailView):
+class TaskDetailCompleteView(FormMixin, DetailView):
     form_class = TaskCompleteForm
     template_name = 'task/detail.html'
     model = Task
@@ -33,24 +33,24 @@ class TaskDetailView(FormMixin, DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         self.success_url = reverse_lazy('taskr:task-detail', kwargs={'pk': kwargs['pk']})
-        return super(TaskDetailView, self).dispatch(request, *args, **kwargs)
+        return super(TaskDetailCompleteView, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form = self.get_form(self.form_class)
         if form.is_valid():
             return self.form_valid(form)
-        return super(TaskDetailView, self).get(request, *args, **kwargs)
+        return super(TaskDetailCompleteView, self).get(request, *args, **kwargs)
 
     def form_valid(self, form):
         task = Task.objects.get(pk=form.cleaned_data['id'])
         task.toggle_complete(commit=False)
         task.save()
-        return super(TaskDetailView, self).form_valid(form)
+        return super(TaskDetailCompleteView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(TaskDetailView, self).get_context_data(**kwargs)
+        context = super(TaskDetailCompleteView, self).get_context_data(**kwargs)
         form = self.get_form(self.form_class)
         if form:
             context['form'] = form
         context.update(kwargs)
-        return super(TaskDetailView, self).get_context_data(**context)
+        return super(TaskDetailCompleteView, self).get_context_data(**context)
