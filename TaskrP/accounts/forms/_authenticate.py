@@ -19,20 +19,19 @@ class AuthenticationForm(forms.Form):
     }
 
     def clean(self):
-        super(AuthenticationForm, self).clean()
-        if not self.is_valid():
-            raise forms.ValidationError(self._error_messages['authentication_failed'], code='authentication_failed')
-
-    def is_valid(self):
         """ Return true if and only if the user exists, it's passwords match and it's not disabled. """
-        if super(AuthenticationForm, self).is_valid():
-            clean_email = self.cleaned_data['email']
-            clean_password = self.cleaned_data['password']
-            try:
-                user = User.objects.get(email=clean_email)
-                if user.check_password(clean_password) and user.is_active:
-                    return True
-            except User.DoesNotExist:
-                pass
-        return False
+        cleaned_data = super(AuthenticationForm, self).clean()
+        email = cleaned_data['email']
+        password = cleaned_data['password']
+        if not self._is_user_valid(email, password):
+            raise forms.ValidationError(self._error_messages['authentication_failed'], code='authentication_failed')
+        return cleaned_data
 
+    def _is_user_valid(self, email, password):
+        try:
+            user = User.objects.get(email=email)
+            if user.check_password(password) and user.is_active:
+                return True
+        except User.DoesNotExist:
+            pass
+        return False
