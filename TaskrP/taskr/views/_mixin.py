@@ -16,7 +16,7 @@ class FilterMultipleObjectMixin(ContextMixin):
         return self.offset if self.offset  else 0
 
     def get_limit(self):
-        return self.limit if self.limit  else (self.get_queryset().count()-1)
+        return self.limit if self.limit  else self.get_queryset().count()
 
     def get_filter(self):
         return self.filter if self.filter else {}
