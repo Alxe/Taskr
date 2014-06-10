@@ -14,11 +14,20 @@ function Write-Message($Message, $FColor='yellow', $BColor='black')
 
 function Make-Preparations()
 {
-    # Boots up the python VirtualEnv enviorment.
     if($script:RUN_WITH_VIRTUALENV) 
     {
+        # Activate virtualenv with installed dependencies
         .\env\Scripts\activate.ps1
     }
+
+    # If the db hasn't been synced for the first time, do it.
+    if(-Not (Test-Path .\TaskrP\db.sqlite3))
+    {
+        # Update database
+        .\taskrP\manage.py syncdb
+    }
+
+    .\TaskrP\manage.py syncdb --migrate
 }
 
 function Start-Server() 
