@@ -1,28 +1,54 @@
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import FormMixin
-from ..forms import TaskCreateForm
-from taskr.forms import TaskCompleteForm
+from django.utils.decorators import method_decorator
 
 __author__ = 'Alex'
 
-from django.views.generic import TemplateView, FormView
-from django.views.generic.detail import SingleObjectMixin, DetailView
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic import TemplateView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin, CreateView
 from ._mixin import UserFilterMultipleObjectMixin
 from ..models import Task
+from ..forms import TaskCreateForm, TaskCompleteForm
 
 
-class TaskListView(UserFilterMultipleObjectMixin, TemplateView):
+class TaskListCreateView(UserFilterMultipleObjectMixin, CreateView):
+    form_class = TaskCreateForm
+    queryset = Task.objects.filter(completed=False)
+    template_name = 'home.html'
+    context_object_name = 'tasks'
+    success_url = reverse_lazy('taskr:home')
+    attr = 'author_id'
+    offset = None
+    limit = 10
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        super(TaskListCreateView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.author = self.request.user
+        return super(TaskListCreateView, self).form_valid(form)
+
+
+class TaskListActiveView(UserFilterMultipleObjectMixin, TemplateView):
     queryset = Task.objects.filter(completed=False)
     template_name = 'task/list.html'
     context_object_name = 'tasks'
     attr = 'author_id'
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        super(TaskListActiveView, self).dispatch(request, *args, **kwargs)
+
     def get_queryset(self):
         return self.queryset
 
 
-class TaskArchiveView(TaskListView):
+class TaskListArchivedView(TaskListActiveView):
     queryset = Task.objects.filter(completed=True)
+    template_name = 'task/archive.html'
 
 
 class TaskDetailCompleteView(FormMixin, DetailView):
@@ -31,6 +57,7 @@ class TaskDetailCompleteView(FormMixin, DetailView):
     model = Task
     context_object_name = 'task'
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         self.success_url = reverse_lazy('taskr:task-detail', kwargs={'pk': kwargs['pk']})
         return super(TaskDetailCompleteView, self).dispatch(request, *args, **kwargs)

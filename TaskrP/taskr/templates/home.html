@@ -24,8 +24,12 @@
 
 {% block extra_script %}
 <script>
-$(function() {
-    $('#datepicker').datepicker();
+$('#datepicker').datepicker({
+    format      : "yyyy/mm/dd",
+    todayBtn    : "linked",
+    language    : "en",
+    autoclose   : true,
+    weekStart   : 1
 });
 </script>
 {% endblock %}

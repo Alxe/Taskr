@@ -22,11 +22,6 @@ TEMPLATE_DEBUG = True
 AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = ('accounts.backends.EmailIdentityBackend', )
 
-# Accounts (authentication module) settings
-ACCOUNTS_NEXT_LOGIN = reverse_lazy('taskr:index')
-ACCOUNTS_NEXT_LOGOUT = reverse_lazy('taskr:index')
-ACCOUNTS_NEXT_REGISTER = reverse_lazy('taskr:index')
-
 # Installed applications
 INSTALLED_APPS = (
     # Django and django-related apps
@@ -92,9 +87,9 @@ STATIC_URL = '/static/'
 
 # Login/Logout
 
-LOGIN_REDIRECT_URL = 'taskr:index'
-LOGIN_URL = 'taskr:auth_login'
-LOGOUT_URL = 'taskr:auth_logout'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login/'
+LOGOUT_URL = '/auth/logout/'
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (

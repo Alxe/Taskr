@@ -3,10 +3,42 @@
 {% block title %}Welcome!{% endblock %}
 
 {% block content %}
+    {% if not user.is_authenticated %}
     <div class="jumbotron">
         <h1><span class="text-primary">Taskr</span> + you = awesome!</h1>
         <p>Taskr let's you manage your tasks, be them personal or professional, with absolute ease.</p>
         <p>Simple by design, try it now...</p>
         <p class="text-center"><a href="{% url 'taskr:auth-register' %}" class="btn btn-lg btn-primary">Sign me up!</a></p>
+    </div>
+    {% endif %}
+
+    <div class="row-fluid">
+        <div class="col-md-4">
+            <h3>Placeholder 1</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Donec et tincidunt ligula, ut aliquam leo.
+                Sed ut urna eu augue fringilla tempor a vel tellus.
+                Cras quis eleifend quam. Vestibulum.
+            </p>
+        </div>
+         <div class="col-md-4">
+            <h3>Placeholder 2</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Donec et tincidunt ligula, ut aliquam leo.
+                Sed ut urna eu augue fringilla tempor a vel tellus.
+                Cras quis eleifend quam. Vestibulum.
+            </p>
+        </div>
+         <div class="col-md-4">
+            <h3>Placeholder 3</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Donec et tincidunt ligula, ut aliquam leo.
+                Sed ut urna eu augue fringilla tempor a vel tellus.
+                Cras quis eleifend quam. Vestibulum.
+            </p>
+        </div>
     </div>
 {% endblock %}
