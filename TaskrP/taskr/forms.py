@@ -10,7 +10,7 @@ class TaskCreateForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        exclude = ['author', 'completed']
+        fields = ['title', 'deadline']
 
 
 class TaskCompleteForm(forms.Form):
