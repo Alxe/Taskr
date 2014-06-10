@@ -13,7 +13,6 @@ from django.views.generic import CreateView
 class RegisterView(CreateView):
     """ Class-based view for registering users """
     form_class = RegistrationForm
-    success_url = getattr(settings, 'LOGIN_REDIRECT_URL', '/')
     template_name = None
 
     @method_decorator(csrf_protect)
@@ -27,6 +26,11 @@ class RegisterView(CreateView):
         if request.user.is_authenticated():
             return HttpResponseRedirect(self.success_url)
         return super(RegisterView, self).get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        if not self.success_url:
+            self.success_url = getattr(settings, 'LOGIN_REDIRECT_URL', '/')
+        return self.success_url
 
     def form_valid(self, form):
         """ After form is already valid, make sure to login user """
