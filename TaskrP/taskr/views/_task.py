@@ -24,7 +24,7 @@ class TaskListCreateView(UserFilterMultipleObjectMixin, CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        super(TaskListCreateView, self).dispatch(request, *args, **kwargs)
+        return super(TaskListCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         task = form.save(commit=False)
@@ -40,7 +40,7 @@ class TaskListActiveView(UserFilterMultipleObjectMixin, TemplateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        super(TaskListActiveView, self).dispatch(request, *args, **kwargs)
+        return super(TaskListActiveView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         return self.queryset
