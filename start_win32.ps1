@@ -20,20 +20,14 @@ function Make-Preparations()
         .\env\Scripts\activate.ps1
     }
 
-    # If the db hasn't been synced for the first time, do it.
-    if(-Not (Test-Path .\TaskrP\db.sqlite3))
-    {
-        # Update database
-        .\taskrP\manage.py syncdb
-    }
-
-    .\TaskrP\manage.py syncdb --migrate
+    # Sync the database each time the script is launched
+    .\taskrP\manage.py syncdb
 }
 
 function Start-Server() 
 {
     # Starts the django development server
-    .\taskrP\manage.py runserver $script:SERVER_PORT
+    .\taskrP\manage.py runserver $script:SERVER_PORT --insecure
 }
 
 Function Start-Pause($Message = 'Press any key to exit...')
