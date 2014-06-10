@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 
 __author__ = 'Alex'
@@ -59,6 +60,7 @@ class TaskDetailCompleteView(FormMixin, DetailView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        self.object = get_object_or_404(self.model, pk=kwargs['pk'], author=request.user)
         self.success_url = reverse_lazy('taskr:task-detail', kwargs={'pk': kwargs['pk']})
         return super(TaskDetailCompleteView, self).dispatch(request, *args, **kwargs)
 
