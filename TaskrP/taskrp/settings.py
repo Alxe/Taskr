@@ -55,9 +55,7 @@ MIDDLEWARE_CLASSES = (
 
 # Template Processor Configuration
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
-)
+TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request',) + TCP
 
 # Auth Configuration
 from django.conf.global_settings import AUTHENTICATION_BACKENDS as AUTHB
