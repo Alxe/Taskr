@@ -86,10 +86,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Login/Logout
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/auth/login/'
-LOGOUT_URL = '/auth/logout/'
+LOGIN_REDIRECT_URL = reverse_lazy('taskr:index')
+LOGIN_URL = reverse_lazy('taskr:auth-login')
+LOGOUT_URL = reverse_lazy('taskr:auth-logout')
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
