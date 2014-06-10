@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+
 __author__ = 'Alex'
 
 from ..models import User
@@ -13,9 +15,13 @@ class AuthenticationForm(forms.Form):
 
     # Information dictionary about errors
     _error_messages = {
-        'duplicate_email': _("An user with that email already exists."),
-        'password_mismatch': _("The password fields didn't match."),
+        'authentication_failed': _("User not registered or password invalid"),
     }
+
+    def clean(self):
+        super(AuthenticationForm, self).clean()
+        if not self.is_valid():
+            raise forms.ValidationError(self._error_messages['authentication_failed'], code='authentication_failed')
 
     def is_valid(self):
         """ Return true if and only if the user exists, it's passwords match and it's not disabled. """
