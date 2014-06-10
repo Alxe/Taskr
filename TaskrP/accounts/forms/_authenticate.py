@@ -32,6 +32,7 @@ class AuthenticationForm(forms.Form):
             user = User.objects.get(email=email)
             if user.check_password(password) and user.is_active:
                 return True
+            # if not true now, all false below
         except User.DoesNotExist:
             pass
         return False
