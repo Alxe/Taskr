@@ -15,7 +15,7 @@ class AuthenticationForm(forms.Form):
 
     # Information dictionary about errors
     _error_messages = {
-        'authentication_failed': _("User not registered or password invalid"),
+        'authentication_failed': _("Email and/or password provided are invalid."),
     }
 
     def clean(self):
