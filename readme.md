@@ -21,12 +21,12 @@ Core features
 Extended features
 ---
 
-- Task tagging, so users can provide a context and organize their tasks.
-- Public API, giving access to 3rd party developers to expand the Taskr ecosystem with clients and utilities.
+- Public API, giving access to 3rd party developers to expand the Taskr ecosystem with clients and utilities. 
 
 Planned features
 ---
 
+- Task tagging, so users can provide a context and organize their tasks.
 - Group functionality, allowing user interaction and collaboration.
 
 Technologies used
