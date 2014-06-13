@@ -49,5 +49,5 @@ Catch [System.Exception] # Bad practice, but should not burp any exception unles
 }
 Finally
 {
-    Start-Pause; Write-Message '-- END OF SCRIPT --'
+    Write-Message '-- END OF SCRIPT --'; Start-Pause
 }
