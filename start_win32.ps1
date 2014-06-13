@@ -27,7 +27,7 @@ function Make-Preparations()
 function Start-Server() 
 {
     # Starts the django development server
-    .\taskrP\manage.py runserver 0.0.0.0:$script:SERVER_PORT
+    .\taskrP\manage.py runserver 0.0.0.0:$script:SERVER_PORT --insecure
 }
 
 Function Start-Pause($Message = 'Press any key to exit...')
